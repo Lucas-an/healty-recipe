@@ -1,0 +1,23 @@
+<div class="d-flex">
+  <input type="text" name="search" placeholder="Pesquise por suas receitas" [(ngModel)]="query"
+    (keydown.enter)="getSearch()" />
+  <button (click)="getSearch()">Pesquisar</button>
+</div>
+
+<div class="mt-5 d-flex flex-wrap gap-3 justify-content-center">
+  <div routerLink="/recipe" [queryParams]="{id: food.id}" class=" foodCard" *ngFor="let food of foods">
+    <img *ngIf="food.image; else noImage" src={{food.image}} alt={{food.title}} class="cardImage">
+    <p class="text-center p-4">
+      <strong>
+        {{food.title}}
+      </strong>
+    </p>
+  </div>
+</div>
+
+<div *ngIf="loading" class="spinner-border d-block mx-auto mt-5" role="status">
+</div>
+
+<ng-template #noImage>
+  <p class="text-center mt-3"><strong>Sem imagem no momento</strong></p>
+</ng-template>

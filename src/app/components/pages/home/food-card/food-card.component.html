@@ -1,0 +1,40 @@
+<div class="d-flex flex-wrap gap-3 justify-content-center px-5">
+  <div routerLink="/recipe" [queryParams]="{id: food.id}" *ngFor="let food of foods" class="food-card">
+    <div>
+      <img src={{food.image}} alt={{food.title}} class="imageCard" *ngIf="food.image; else noImage">
+    </div>
+    <div class="food-information">
+      <p><strong>Nome:</strong> {{food.title}}</p>
+      <p><strong>Tempo de preparo:</strong> {{food.readyInMinutes}} minutos</p>
+      <p>
+        <strong>Vegetariano: </strong>
+        <span *ngIf="food.vegetarian === true; else negativeRes">Sim</span>
+      </p>
+      <p>
+        <strong>Vegano: </strong>
+        <span *ngIf="food.vegetarian === true; else negativeRes">Sim</span>
+      </p>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="loading" class="spinner-border d-block mx-auto" role="status"></div>
+
+<div *ngIf="loadingMore" class="spinner-border d-block mx-auto my-4" role="status"></div>
+
+<ng-template #noImage>
+  <p class="mt-3 py-3 text-center"><strong><u>Sem imagem no momento</u></strong></p>
+</ng-template>
+
+<ng-template #negativeRes>
+  <span>Não</span>
+</ng-template>
+
+<button (click)="loadMore()" *ngIf="foods?.length < 9; else buttonDisabled" type="button"
+  class="btn btn-primary d-block mx-auto mt-4">
+  Carregar mais
+</button>
+
+<ng-template #buttonDisabled>
+  <button type="button" class="btn disabled btn-secondary d-block mx-auto mt-4">Carregar mais</button>
+</ng-template>
